@@ -186,7 +186,7 @@ def tokenize_tweet(document):
     f = document.index("timestr") - 3
     # 提取用户名、tweet内容和tweetid三部分主要信息
     document = document[c:d] + document[a:b] + document[e:f]
-    print(document)
+    #print(document)
     terms = TextBlob(document).words.singularize()
 
     result = []
@@ -272,6 +272,10 @@ def do_search():
 
 def main():
     get_postings()
+    aaa=open('re.txt','w')
+    global postings
+    aaa.write(str(postings))
+    print("!!!!!!!!!!!!!!!!!!!!!!!")
     while True:
         do_search()
 

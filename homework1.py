@@ -1,4 +1,4 @@
-#", "timeStr"
+
 import os
 f=open('tweets.txt','r')
 x=open('text.txt','w')
@@ -29,7 +29,7 @@ for line in f:
             dict[i].append(word[0])
         else:
             dict[i].append(word[0])
+
 a=open('dict.txt','w')
 a.write(str(dict))
 print(dict)
-
