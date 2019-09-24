@@ -5,6 +5,7 @@ import sys
 from textblob import TextBlob
 from textblob import Word
 from collections import defaultdict
+
 Dict = defaultdict(dict)
 
 
@@ -28,14 +29,14 @@ def makeDict():
     f.close()
     x.close()
     '''
-    f=open('file/text.txt','r')
+    f = open('file/text.txt', 'r')
 
-    x=open('file/word.txt','w')
+    x = open('file/word.txt', 'w')
     for line in f:
-        word=TextBlob(line).words.singularize()
-        word[0]=Word(word[0])
+        word = TextBlob(line).words.singularize()
+        word[0] = Word(word[0])
         for i in word[1:]:
-            #i=Word(i)
+            # i=Word(i)
             if i not in Dict:
                 Dict[i] = []
                 Dict[i].append(word[0])
@@ -43,8 +44,9 @@ def makeDict():
                 Dict[i].append(word[0])
     for i in Dict:
         Dict[i].sort()
-    #print(Dict['may'])
+    # print(Dict['may'])
     x.write(str(Dict))
+
 
 def And(term1, term2):
     global Dict
@@ -56,8 +58,8 @@ def And(term1, term2):
         j = len(Dict[term2])
         x = 0
         y = 0
-        l1=Dict[term1]
-        l2=Dict[term2]
+        l1 = Dict[term1]
+        l2 = Dict[term2]
         while x < i and y < j:
             if l1[x] == l2[y]:
                 answer.append(l1[x])
@@ -69,14 +71,16 @@ def And(term1, term2):
                 y += 1
         return answer
 
+
 def Or(term1, term2):
     global Dict
     answer = []
     if (term1 not in Dict) or (term2 not in Dict):
         return answer
     else:
-        answer=Dict[term1]+Dict[term2]
+        answer = Dict[term1] + Dict[term2]
         return answer
+
 
 def Not(term1, term2):
     global Dict
@@ -94,6 +98,7 @@ def Not(term1, term2):
             if ter not in Dict[term2]:
                 ANS.append(ter)
         return ANS
+
 
 from collections import defaultdict
 import operator
@@ -130,8 +135,6 @@ def Search():
         Fre(terms[0])
 
 
-
-
 def token(doc):
     doc = doc.lower()
     terms = TextBlob(doc).words.singularize()
@@ -144,7 +147,6 @@ def token(doc):
     return result
 
 
-
 def main():
     makeDict()
     while True:
@@ -153,8 +155,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
