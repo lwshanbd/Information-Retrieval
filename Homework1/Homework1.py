@@ -9,7 +9,7 @@ from collections import defaultdict
 Dict = defaultdict(dict)
 
 
-def makeDict():
+def makeDict1():
     global Dict
     '''
     f=open('tweets.txt','r')
@@ -44,7 +44,7 @@ def makeDict():
                 Dict[i].append(word[0])
     for i in Dict:
         Dict[i].sort()
-    # print(Dict['may'])
+    #print(Dict['may'])
     x.write(str(Dict))
 
 
@@ -100,6 +100,83 @@ def Not(term1, term2):
         return ANS
 
 
+def And3(term1, term2, term3):
+    Answer = []
+    if term3 not in Dict:
+        return Answer
+    else:
+        Answer = And(term1, term2)
+        if Answer == []:
+            return Answer
+        ans = []
+        i = len(Answer)
+        j = len(Dict[term3])
+        x = 0
+        y = 0
+        while x < i and y < j:
+            if Answer[x] == Dict[term3][y]:
+                ans.append(Answer[x])
+                x += 1
+                y += 1
+            elif Answer[x] < Dict[term3][y]:
+                x += 1
+            else:
+                y += 1
+
+        return ans
+
+
+def Or3(term1, term2, term3):
+    Answer = Or(term1, term2);
+    if term3 not in Dict:
+        return Answer
+    else:
+        if Answer == []:
+            Answer = Dict[term3]
+        else:
+            for item in Dict[term3]:
+                if item not in Answer:
+                    Answer.append(item)
+        return Answer
+
+
+def AndOr(term1, term2, term3):
+    Answer = And(term1, term2)
+    if term3 not in Dict:
+        return Answer
+    else:
+        if Answer == []:
+            Answer = Dict[term3]
+            return Answer
+        else:
+            for item in Dict[term3]:
+                if item not in Answer:
+                    Answer.append(item)
+            return Answer
+
+
+def OrAnd(term1, term2, term3):
+    Answer = Or(term1, term2)
+    if (term3 not in Dict) or (Answer == []):
+        return Answer
+    else:
+        ans = []
+        i = len(Answer)
+        j = len(Dict[term3])
+        x = 0
+        y = 0
+        while x < i and y < j:
+            if Answer[x] == Dict[term3][y]:
+                ans.append(Answer[x])
+                x += 1
+                y += 1
+            elif Answer[x] < Dict[term3][y]:
+                x += 1
+            else:
+                y += 1
+        return ans
+
+
 from collections import defaultdict
 import operator
 
@@ -131,7 +208,20 @@ def Search():
         elif terms[1] == "not":
             answer = Not(terms[0], terms[2])
             print(answer)
-    if len(terms) == 1:
+    elif len(terms) == 5:
+        if terms[1] == "and" and terms[3] == "and":
+            answer = And3(terms[0], terms[2], terms[4])
+            print(answer)
+        elif terms[1] == "or" and terms[3] == "or":
+            answer = Or3(terms[0], terms[2], terms[4])
+            print(answer)
+        elif terms[1] == "or" and terms[3] == "and":
+            answer = OrAnd(terms[0], terms[2], terms[4])
+            print(answer)
+        elif terms[1] == "and" and terms[3] == "or":
+            answer = AndOr(terms[0], terms[2], terms[5])
+            print(answer)
+    elif len(terms) == 1:
         Fre(terms[0])
 
 
@@ -148,7 +238,8 @@ def token(doc):
 
 
 def main():
-    makeDict()
+    makeDict1()
+
     while True:
         Search()
 
