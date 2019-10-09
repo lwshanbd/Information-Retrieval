@@ -140,4 +140,4 @@ def Not(term1, term2):
 
 
 
-备注：Jupyter Notebook文件只是中间形势，实验结果以py文件为准。
+备注：Jupyter Notebook文件只是中间形式，实验结果以py文件为准。
