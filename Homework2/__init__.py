@@ -1,28 +1,57 @@
-import json
-from collections import Counter
-import collections
 import math
+from textblob import TextBlob
+from textblob import Word
 
-Index={}          #    总索引
-Paper_number=0    #标记文章总数量
-Word_frequency={} #“有该词”文章的数量
+Dict = {}
 
-for i in open('tweets.txt'):
-    Paper_number=Paper_number+1
-    index={}      #针对每个tweets单独的索引
-    dict = json.loads(i)
-    array_text=(dict['text']).lower().split(" ")
-    array_username=dict['userName'].lower().split(" ")
-    array=array_text+array_username
-    res = Counter(array)
-    print(res)
-    res = sorted(res.items(), key=lambda x: x[0])
-    print(res)
-    indexed={}
-    for i in res:
-        if(i[0] not in Word_frequency.keys()):
-            Word_frequency[i[0]]=0
-        Word_frequency[i[0]]=Word_frequency[i[0]]+1
-        indexed[i[0]]=math.log(1+i[1], 10)#计算tft
-    Index[dict["tweetId"]]=indexed
-    print("-------------------------")
+f = open('file/text.txt', 'r')
+'''
+x = open('file/word.txt', 'w')
+for line in f:
+    word = TextBlob(line).words.singularize()
+    word[0] = Word(word[0])
+    # word[0]是 tweet id
+    for i in word[1:]:
+        # i=Word(i)
+        if i not in Dict:
+            #tmp={word[0]:1}
+            Dict[i]={}
+            Dict[i][word[0]] = 1
+        else:
+            if word[0] not in Dict[i]:
+                Dict[i][word[0]] = 1
+            else:
+                Dict[i][word[0]]=Dict[i][word[0]]+1
+
+# print(Dict['may'])
+x.write(str(Dict))
+x.close()
+'''
+S=open('file/cosinelog.txt','w')
+Dict1 = {}
+Cos={}
+for line in f:
+    word = TextBlob(line).words.singularize()
+    word[0] = Word(word[0])
+    # word[0]是 tweet id
+    Dict1[word[0]] = {}
+    for i in word[1:]:
+        # i=Word(i)
+        if i not in Dict1[word[0]]:
+            Dict1[word[0]][i] = 1
+        else:
+            Dict1[word[0]][i] = Dict1[word[0]][i] + 1
+
+for i in Dict1:
+    ans = 0
+    for word in Dict1[i]:
+        tmp=1+math.log10(int(Dict1[i][word]))
+        ans += tmp**2
+    ans=math.sqrt(ans)
+    print(ans)
+    Cos[i]=ans
+
+S.write(str(Cos))
+
+f.close()
+S.close()
