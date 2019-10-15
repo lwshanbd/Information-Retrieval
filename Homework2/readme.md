@@ -48,9 +48,13 @@ x.write(str(Dict))
 x.close()
 ```
 倒排索引结果示例如下:
-![cmd-markdown-logo](./images/img1.jpg)
+![倒排索引](./images/img1.jpg)
 
 ### 2.计算每篇doc的cosine值
+
+cosine的计算公式为：
+
+![cosine](./images/img2.jpg)
 
 考虑到计算每个doc的cosine的计算量较大，如果再query时计算，对查询速度有影响，因此，我采用了一次计算出所有文本的cosine值导入文件的方法，process代码如下：
 ```python
@@ -80,8 +84,68 @@ for i in Dict1:
 
 S.write(str(Cos))
 ```
+### 3.计算结果
+
+#### 3.1 计算wtq
+
+考虑到查询方式为lnc,ltn,故需要对query中的词频求log，并乘以其idf。
+
+计算公式为：
+
+![log](./images/img3.jpg)
+
+![idf](./images/img4.jpg)
+
+具体函数实现如下：
+```python
+def wtq(terms, term):
+    global Dict
+    num = 0
+    for i in terms:
+        if i == term:
+            num += 1
+    idf = math.log10(N / len(Dict[term]))
+    wtq =  1 + math.log10(num)
+    return idf * wtq
+```
+
+### 3.2 查询函数
+
+对于doc中wtd的计算，由于计算量较小，我们将求log和除以length的过程整合到了search函数中。 Search函数的实现如下：
+
+```python
+def Search(terms):
+    getDict()
+    score = {}
+    for w in terms:
+        Wtq = wtq(terms, w)
+        for i in Dict[w]:
+            td = int(Dict[w][i])
+            wtd = 1 + math.log10(td)
+            if i not in score:
+                score[i]=wtd*Wtq
+            else:
+                score[i]+=wtd*Wtq
+    for doc in score:
+        score[doc]=score[doc]/cos[doc]
+    result = sorted(score.items(), key=lambda x: x[1], reverse=True)
+    print("tweeetid            评分")
+    for i in result[:10]:
+        print(str(i[0])+"   "+str(i[1]))
+```
+
+## 运行示例
+
+![example](./images/img5.jpg)
 
 
 
 
-备注：Jupyter Notebook文件只是中间形式，实验结果以py文件为准。
+## 反思与感悟
+
+
+通过本次实验，对于倒排索引的构建有了更充分的认识，对于*SMART notation*有了更深的了解。
+
+------
+
+*备注：Jupyter Notebook文件只是中间形式，实验结果以py文件为准。*
