@@ -1,4 +1,4 @@
-# Information-Retrieval
+# Information-Retrieval AND Data-Mining
 
 
 ## Foreword
