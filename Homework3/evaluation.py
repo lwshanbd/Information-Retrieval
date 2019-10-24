@@ -1,6 +1,7 @@
 import math
 import numpy as np
 
+
 def generate_tweetid_gain(file_name):
     qrels_dict = {}
     with open(file_name, 'r', errors='ignore') as f:
@@ -13,6 +14,7 @@ def generate_tweetid_gain(file_name):
             if int(ele[3]) > 0:
                 qrels_dict[ele[0]][ele[2]] = int(ele[3])
     return qrels_dict
+
 
 def read_tweetid_test(file_name):
     # input file format
@@ -29,13 +31,14 @@ def read_tweetid_test(file_name):
             test_dict[ele[0]].append(ele[1])
     return test_dict
 
-def MAP_eval(qrels_dict, test_dict, k = 100):
+
+def MAP_eval(qrels_dict, test_dict, k=100):
     AP_result = []
     for query in qrels_dict:
         test_result = test_dict[query]
         true_list = set(qrels_dict[query].keys())
-        #print(len(true_list))
-        #length_use = min(k, len(test_result), len(true_list))
+        # print(len(true_list))
+        # length_use = min(k, len(test_result), len(true_list))
         length_use = min(k, len(test_result))
         if length_use <= 0:
             print('query ', query, ' not found test list')
@@ -48,7 +51,7 @@ def MAP_eval(qrels_dict, test_dict, k = 100):
             if doc_id in true_list:
                 i_retrieval_true += 1
                 P_result.append(i_retrieval_true / i)
-                #print(i_retrieval_true / i)
+                # print(i_retrieval_true / i)
         if P_result:
             AP = np.sum(P_result) / len(true_list)
             print('query:', query, ',AP:', AP)
@@ -58,7 +61,8 @@ def MAP_eval(qrels_dict, test_dict, k = 100):
             AP_result.append(0)
     return np.mean(AP_result)
 
-def NDCG_eval(qrels_dict, test_dict, k = 100):
+
+def NDCG_eval(qrels_dict, test_dict, k=100):
     NDCG_result = []
     for query in qrels_dict:
         test_result = test_dict[query]
@@ -84,6 +88,28 @@ def NDCG_eval(qrels_dict, test_dict, k = 100):
         NDCG_result.append(NDCG)
     return np.mean(NDCG_result)
 
+#查阅资料得：
+#对于一个query，若第一个正确答案排在第n位，则MRR得分就是 1/n
+def MRR_eval(qrels_dict, test_dict, k=100):
+    MRR_result = []
+    for query in qrels_dict:
+        test_result = test_dict[query]
+        true_list = set(qrels_dict[query].keys())
+        length_use = min(k, len(test_result))
+        if length_use <= 0:
+            print('query ', query, ' not found test list')
+            return []
+        i = 0
+        for doc_id in test_result[0: length_use]:
+            i += 1
+            if doc_id in true_list:
+                MRR = 1 / i
+                MRR_result.append(1 / i)
+                print('query', query, ', MRR: ', MRR)
+                break
+    return np.mean(MRR_result)
+
+
 def evaluation():
     k = 100
     # query relevance file
@@ -98,5 +124,9 @@ def evaluation():
     print('MAP', ' = ', MAP, sep='')
     NDCG = NDCG_eval(qrels_dict, test_dict, k)
     print('NDCG', ' = ', NDCG, sep='')
+    MRR = MRR_eval(qrels_dict, test_dict, k)
+    print('MRR', ' = ', MRR, sep='')
+
+
 if __name__ == '__main__':
     evaluation()
