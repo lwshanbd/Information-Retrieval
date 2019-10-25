@@ -23,12 +23,13 @@
 （1） Mean Average Precision (MAP)
 
 
+$MAP=\frac{1}{Q}\sum_{j=1}^{|Q|}\frac{1}{m_j}\sum_{k=1}^{m_j}Precision(R_{jk})$
 
-$MAP(Q)=\frac{1}{|Q|} 	\sum_{j=1}^{|Q|}\frac{1}{RANK}$
 
 （2）Mean Reciprocal Rank (MRR)
 
-$MRR=\frac{1}{Q}\sum_{j=1}^{|Q|}\frac{1}{m_j}\sum_{k=1}^{m_j}Precision(R_{jk})$
+$MRR(Q)=\frac{1}{|Q|} 	\sum_{j=1}^{|Q|}\frac{1}{RANK}$
+
 
 > 假定信息需求$q_i\in Q$对应的所有文档集合为$\{ d_1,\cdots , d_{mj}\},R_{jk}$是返回结果中直到遇见$d_k$后所在位置前的所有文档的集合
 
