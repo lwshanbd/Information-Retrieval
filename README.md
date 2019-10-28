@@ -11,7 +11,9 @@ This work started on Sep 20, 2019.
 
 The latest commit is on Oct 25, 2019.
 
-## HomeWork 2 Cluster
+> The folders' names changed on on Oct 25, 2019.
+
+## HomeWork 2 Cluster Based on *Scikit-Learn*
 
 
 This work started on Oct 25, 2019.
