@@ -204,13 +204,83 @@ if opts.n_components:
 根据Scikit-Learn官方文档提供的操作，通过更改Api接口的调用，实现多个聚类方法的实现。
 
 
+##### Kmeans
 
+```python
+km = KMeans(n_clusters=true_k, init='k-means++', max_iter=100, n_init=1,
+            verbose=opts.verbose)
 
+print("Clustering sparse data with %s" % km)
+t0 = time()
+km.fit(X)
+#print(km.cluster_centers_)
+print("done in %0.3fs" % (time() - t0))
+```
 
+##### DBSCAN
 
+```python
+km = DBSCAN(eps=5, min_samples=3)
 
+print("Clustering sparse data with %s" % km)
+t0 = time()
+km.fit(X)
+#print(km.cluster_centers_)
+print("done in %0.3fs" % (time() - t0))
+```
 
+##### AffinityPropagation
 
+```python
+km = AffinityPropagation(convergence_iter=20)
+
+print("Clustering sparse data with %s" % km)
+t0 = time()
+km.fit(X)
+#print(km.cluster_centers_)
+print("done in %0.3fs" % (time() - t0))
+```
+
+##### Ward hierarchical clustering
+
+```python
+km = AgglomerativeClustering(n_clusters=4, linkage='ward',connectivity=None)
+
+print("Clustering sparse data with %s" % km)
+t0 = time()
+km.fit(X)
+#print(km.cluster_centers_)
+print("done in %0.3fs" % (time() - t0))
+```
+
+##### AgglomerativeClustering
+
+```python
+km = AgglomerativeClustering(n_clusters=4, linkage='complete',connectivity=None)
+
+print("Clustering sparse data with %s" % km)
+t0 = time()
+km.fit(X)
+#print(km.cluster_centers_)
+print("done in %0.3fs" % (time() - t0))
+```
+
+##### GaussianMixture
+
+```python
+from sklearn import mixture
+km = mixture.GaussianMixture(n_components=4, covariance_type='full')
+
+print("Clustering sparse data with %s" % km)
+t0 = time()
+km.fit(X)
+#print(km.cluster_centers_)
+print("done in %0.3fs" % (time() - t0))
+```
+
+##### MeanShift
+
+经实验，MeanShift不适用于文本聚类
 
 
 备注：Jupyter Notebook文件只是中间形式，实验结果以py文件为准。
