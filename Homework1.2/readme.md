@@ -54,7 +54,9 @@ x.close()
 
 cosine的计算公式为：
 
-![cosine](./images/img2.jpg)
+$$c(cosine)=\frac{1}{\sqrt{w_1^2+w_2^2+\cdots+w_M^2}}$$
+
+
 
 考虑到计算每个doc的cosine的计算量较大，如果再query时计算，对查询速度有影响，因此，我采用了一次计算出所有文本的cosine值导入文件的方法，process代码如下：
 ```python
@@ -92,9 +94,10 @@ S.write(str(Cos))
 
 计算公式为：
 
-![log](./images/img3.jpg)
+$$l(logarithm)=1+log(tf_{t,d})$$
 
-![idf](./images/img4.jpg)
+$$t(idf)=log\frac{N}{df_t}$$
+
 
 具体函数实现如下：
 ```python
