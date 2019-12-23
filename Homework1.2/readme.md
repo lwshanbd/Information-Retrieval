@@ -54,7 +54,7 @@ x.close()
 
 cosine的计算公式为：
 
-$$c(cosine)=\frac{1}{\sqrt{w_1^2+w_2^2+\cdots+w_M^2}}$$
+$c(cosine)=\frac{1}{\sqrt{w_1^2+w_2^2+\cdots+w_M^2}}$
 
 
 
@@ -94,9 +94,9 @@ S.write(str(Cos))
 
 计算公式为：
 
-$$l(logarithm)=1+log(tf_{t,d})$$
+$l(logarithm)=1+log(tf_{t,d})$
 
-$$t(idf)=log\frac{N}{df_t}$$
+$t(idf)=log\frac{N}{df_t}$
 
 
 具体函数实现如下：
