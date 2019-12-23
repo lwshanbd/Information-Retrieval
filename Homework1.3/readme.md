@@ -23,19 +23,21 @@
 （1） Mean Average Precision (MAP)
 
 
-$MAP=\frac{1}{Q}\sum_{j=1}^{|Q|}\frac{1}{m_j}\sum_{k=1}^{m_j}Precision(R_{jk})$
 
+
+![2](https://www.zhihu.com/equation?tex=MAP=\frac{1}{Q}\sum_{j=1}^{|Q|}\frac{1}{m_j}\sum_{k=1}^{m_j}Precision(R_{jk}))
 
 （2）Mean Reciprocal Rank (MRR)
 
-$MRR(Q)=\frac{1}{|Q|} 	\sum_{j=1}^{|Q|}\frac{1}{RANK}$
 
+
+![2](https://www.zhihu.com/equation?tex=MRR(Q)=\frac{1}{|Q|}%20\sum_{j=1}^{|Q|}\frac{1}{RANK})
 
 > 假定信息需求$q_i\in Q$对应的所有文档集合为$\{ d_1,\cdots , d_{mj}\},R_{jk}$是返回结果中直到遇见$d_k$后所在位置前的所有文档的集合
 
  （3）Normalized Discounted Cumulative Gain (NDCG)
 
- $NDCG(Q,K)=\frac{1}{|Q|}\sum_{j=1}^{|Q|}Z_{j,k}\sum_{m=1}^{k}\frac{2^{R(j,m)-1}}{log(1+m)}$
+![2](https://www.zhihu.com/equation?tex=NDCG(Q,K)=\frac{1}{|Q|}\sum_{j=1}^{|Q|}Z_{j,k}\sum_{m=1}^{k}\frac{2^{R(j,m)-1}}{log(1+m)})
 
 ### 2.补写MRR代码
 
